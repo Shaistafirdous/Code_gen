@@ -21,9 +21,9 @@ if question:
     )
 
     # Generate algorithm
-    prompt = f"""Your AI assistant's task is to produce a step-by-step algorithm for the code delimited by ```\
-    ``` code:{generated_code} ```
-    """
+    prompt = f""" Your AI assistant's task is to produce a step-by-step algorithm for the code delimited by ```\
+    ``` code:{generated_code} ``` """
+    
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": prompt}],
