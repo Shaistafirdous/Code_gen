@@ -35,4 +35,4 @@ if question:
 
     # Display generated code in the second column
     col2.header("Generated Code")
-    col2.write(generated_code, language="python")
+    col2.code(generated_code, language="python")
