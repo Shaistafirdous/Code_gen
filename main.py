@@ -3,7 +3,7 @@ import openai
 from openai import OpenAI
 
 # Replace with your actual OpenAI API key
-client = OpenAI(api_key=("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"))
+client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY"))"))
 
 question = st.text_input("Type your question here...")
 with st.sidebar:
