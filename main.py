@@ -13,13 +13,16 @@ if question:
         model="ft:gpt-3.5-turbo-0613:personal::8p1RYc64",
         messages=[{"role": "user", "content": question}],
     )
-    generated_code = response.choices[0].message.content
+    code = response.choices[0].message.content
+    
+    completion = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content": prompt}],
+    )
 
     # Generate algorithm
     prompt = f"""Your AI assistant's task is to produce a step-by-step algorithm for the code delimited by ```\
-    and also convert the code generated to an understandable manner according to the question delimited by ``\
     ``` code:{generated_code} ```
-    `` question:{question} ``
     """
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
