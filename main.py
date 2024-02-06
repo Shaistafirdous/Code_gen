@@ -16,7 +16,7 @@ if question:
     )
     generated_code = response.choices[0].message.content
 
-    formatted_code = black.format_str(generated_code, mode=black.FileMode())
+    formatted_code = black.format_str(generated_code, line_lenght=black.DEFAULT_LINE_LENGTH)
 
     # Generate algorithm
     prompt = f""" Your AI assistant's task is to produce a step-by-step algorithm for the code delimited by ```\
