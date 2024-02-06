@@ -1,6 +1,7 @@
 import streamlit as st
 import openai
 from openai import OpenAI
+import black
 
 # Replace with your actual OpenAI API key
 client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY"))
@@ -14,6 +15,10 @@ if question:
         messages=[{"role": "user", "content": question}],
     )
     generated_code = response.choices[0].message.content
+
+    formatted_code = black.format_file_contents(
+        generated_code, fast=True, mode=black.FileMode()
+    )
 
     # Generate algorithm
     prompt = f""" Your AI assistant's task is to produce a step-by-step algorithm for the code delimited by ```\
@@ -35,4 +40,4 @@ if question:
 
     # Display generated code in the second column
     col2.header("Generated Code")
-    col2.code(generated_code, language="python")
+    col2.code(formatted_code, language="python")
