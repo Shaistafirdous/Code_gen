@@ -54,7 +54,7 @@ col1.write(algorithm)
 
 # Display generated code in the second column
 col2.header("Generated Code")
-code_container = col2.code(formatted_code, language="python")
+col2.write(formatted_code, language="python")
 
 translate_button_pressed = st.button("Translate")
 
