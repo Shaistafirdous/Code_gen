@@ -3,9 +3,6 @@ import openai
 from openai import OpenAI
 import black
 import transformers
-from transformers import AutoTokenizer
-from transformers import TFAutoModelForSeq2SeqLM, DataCollatorForSeq2Seq
-from transformers import AdamWeightDecay
 from transformers import AutoTokenizer, TFAutoModelForSeq2SeqLM
 
 model_checkpoint = "Helsinki-NLP/opus-mt-en-hi"
@@ -16,9 +13,7 @@ from transformers import TFAutoModelForSeq2SeqLM
 model_path = "C:/Users/Vishwas/Desktop/personal/major project/firdous/tf_model/"
 model = TFAutoModelForSeq2SeqLM.from_pretrained(model_path)
 
-OPENAI_API_KEY='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'
-# Replace with your actual OpenAI API key
-client = OpenAI(api_key=OPENAI_API_KEY)
+client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY"))
 
 question = st.text_input("Type your question here...")
 with st.sidebar:
