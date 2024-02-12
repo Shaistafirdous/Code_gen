@@ -58,3 +58,5 @@ zipp==3.17.0
 black==24.1.1
 transformers==4.37.2
 sentencepiece==0.1.99
+autopep8==2.0.4
+TensorFlow==3.2.0
