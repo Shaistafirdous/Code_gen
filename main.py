@@ -1,5 +1,6 @@
 import streamlit as st
 import openai
+from openai import OpenAI
 from transformers import AutoTokenizer, TFAutoModelForSeq2SeqLM
 import autopep8
 
