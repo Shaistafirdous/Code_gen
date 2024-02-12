@@ -7,35 +7,42 @@ import autopep8
 
 model_checkpoint = "Helsinki-NLP/opus-mt-en-hi"
 tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+OPENAI_API_KEY="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"
+client = OpenAI(api_key=OPENAI_API_KEY)
 
+
+# Generate algorithm
+def generate_algorithm(generated_code):
+    prompt = f""" Your AI assistant's task is to produce a explaination for the code delimited by ``` which can further be used for language translation also\
+    ``` code:{generated_code} ``` """
+    completion = client.chat.completions.create(
+            model="gpt-3.5-turbo-0125",
+            messages=[{"role": "user", "content": prompt}],
+        )
+    return completion.choices[0].message.content
 from transformers import TFAutoModelForSeq2SeqLM
 
 model_path = "Vishwasv007/eng-hin"
 model = TFAutoModelForSeq2SeqLM.from_pretrained(model_path)
 
-client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY"))
+
 translated_algo=""
+
 question = st.text_input("Type your question here...")
-with st.sidebar:
-    st. title("Get your text converted to Code")
-if question:
-    response = client.chat.completions.create(
+response = client.chat.completions.create(
         model="ft:gpt-3.5-turbo-0613:personal::8p1RYc64",
         messages=[{"role": "user", "content": question}],
-    )
+)
+
+with st.sidebar:
+    st. title("Get your text converted to Code")
+
+
+if question:
     generated_code = response.choices[0].message.content
     formatted_code = autopep8.fix_code(generated_code)
 
-    # Generate algorithm
-    prompt = f""" Your AI assistant's task is to produce a explaination for the code delimited by ``` which can further be used for language translation also\
-    ``` code:{generated_code} ``` """
-    
-    completion = client.chat.completions.create(
-        model="gpt-3.5-turbo-0125",
-        messages=[{"role": "user", "content": prompt}],
-    )
-
-    algorithm = completion.choices[0].message.content
+    algorithm = generate_algorithm(generated_code)
 
     tokenized = tokenizer([algorithm], return_tensors='np')
     out = model.generate(**tokenized, max_length=218)
@@ -44,7 +51,7 @@ if question:
     translated_algo=translated_algorithm
 
     # Create two columns
-    col1, col2 = st.columns(2)
+    col1, col2 ,col3= st.columns(3)
 
     # Display algorithm in the first column
     col1.header("Algorithm")
@@ -54,7 +61,7 @@ if question:
     col2.header("Generated Code")
     col2.code(formatted_code, language="python")
 
-if st.button("Translate"):
-    # Display translated algorithm in the same column
-    st.header("Translated Algorithm")
-    st.write(translated_algo)
+    col3.header("translated algorithm")
+    if col3.button("Translate"):
+        # Display translated algorithm in the same column
+        col3.write(translated_algo)
