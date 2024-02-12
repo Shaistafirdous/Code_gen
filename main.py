@@ -27,8 +27,6 @@ if question:
     generated_code = response.choices[0].message.content
     formatted_code = autopep8.fix_code(generated_code)
 
-    formatted_code = autopep8.fix_code(generated_code)
-
     # Generate algorithm
     prompt = f""" Your AI assistant's task is to produce a explaination for the code delimited by ``` which can further be used for language translation also\
     ``` code:{generated_code} ``` """
