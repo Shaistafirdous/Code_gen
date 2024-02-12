@@ -27,7 +27,7 @@ if question:
     generated_code = response.choices[0].message.content
     formatted_code = autopep8.fix_code(generated_code)
 
-    #formatted_code = black.format_str(generated_code, mode=black.FileMode())
+    formatted_code = .format_str(generated_code, mode=black.FileMode())
 
     # Generate algorithm
     prompt = f""" Your AI assistant's task is to produce a explaination for the code delimited by ``` which can further be used for language translation also\
@@ -52,11 +52,11 @@ if question:
     col2.code(formatted_code, language="python")
 
 if st.button("Translate"):
-            tokenized = tokenizer([algorithm], return_tensors='np')
-            out = model.generate(**tokenized, max_length=218)
-            with tokenizer.as_target_tokenizer():
-                translated_algorithm = tokenizer.decode(out[0], skip_special_tokens=True)
+        tokenized = tokenizer([algorithm], return_tensors='np')
+        out = model.generate(**tokenized, max_length=218)
+        with tokenizer.as_target_tokenizer():
+            translated_algorithm = tokenizer.decode(out[0], skip_special_tokens=True)
 
-            # Display translated algorithm in the same column
-            st.header("Translated Algorithm")
-            st.write(translated_algorithm)
+        # Display translated algorithm in the same column
+        st.header("Translated Algorithm")
+        st.write(translated_algorithm)
