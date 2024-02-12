@@ -19,11 +19,6 @@ client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY"))
 question = st.text_input("Type your question here...")
 with st.sidebar:
     st. title("Get your text converted to Code")
-    
-generated_code = ""
-algorithm = ""
-translated_algorithm = ""
-
 if question:
     response = client.chat.completions.create(
         model="ft:gpt-3.5-turbo-0613:personal::8p1RYc64",
@@ -45,26 +40,23 @@ if question:
 
     algorithm = completion.choices[0].message.content
 
-    # Display code, algorithm, and translation columns
-col1, col2, col3 = st.columns([1, 1, 1])
+    # Create two columns
+    col1, col2 = st.columns(2)
 
-# Display algorithm in the first column
-col1.header("Algorithm")
-col1.write(algorithm)
+    # Display algorithm in the first column
+    col1.header("Algorithm")
+    col1.write(algorithm)
 
-# Display generated code in the second column
-col2.header("Generated Code")
-col2.write(formatted_code, language="python")
+    # Display generated code in the second column
+    col2.header("Generated Code")
+    col2.code(formatted_code, language="python")
 
-translate_button_pressed = st.button("Translate")
+if st.button("Translate"):
+        tokenized = tokenizer([algorithm], return_tensors='np')
+        out = model.generate(**tokenized, max_length=218)
+        with tokenizer.as_target_tokenizer():
+            translated_algorithm = tokenizer.decode(out[0], skip_special_tokens=True)
 
-# If translate button is pressed and algorithm exists, translate it and show in third column
-if translate_button_pressed and algorithm:
-    tokenized = tokenizer([algorithm], return_tensors='tf')
-    out = model.generate(**tokenized, max_length=218)
-    with tokenizer.as_target_tokenizer():
-        translated_algorithm = tokenizer.decode(out[0], skip_special_tokens=True)
-
-    # Display translated algorithm in the third column
-    col3.header("Translated Algorithm")
-    col3.write(translated_algorithm)
+        # Display translated algorithm in the same column
+        st.header("Translated Algorithm")
+        st.write(translated_algorithm)
