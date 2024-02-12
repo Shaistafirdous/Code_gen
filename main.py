@@ -14,7 +14,7 @@ model_path = "Vishwasv007/eng-hin"
 model = TFAutoModelForSeq2SeqLM.from_pretrained(model_path)
 
 client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY"))
-
+translated_algo=""
 question = st.text_input("Type your question here...")
 with st.sidebar:
     st. title("Get your text converted to Code")
@@ -41,6 +41,7 @@ if question:
     out = model.generate(**tokenized, max_length=218)
     with tokenizer.as_target_tokenizer():
         translated_algorithm = tokenizer.decode(out[0], skip_special_tokens=True)
+    translated_algo=translated_algorithm
 
     # Create two columns
     col1, col2 = st.columns(2)
@@ -51,9 +52,9 @@ if question:
 
     # Display generated code in the second column
     col2.header("Generated Code")
-    col2.write(formatted_code, language="python")
+    col2.code(formatted_code, language="python")
 
 if st.button("Translate"):
     # Display translated algorithm in the same column
     st.header("Translated Algorithm")
-    st.write(translated_algorithm)
+    st.write(translated_algo)
