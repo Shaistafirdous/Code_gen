@@ -52,11 +52,12 @@ if question:
     col2.code(formatted_code, language="python")
 
 if st.button("Translate"):
-        tokenized = tokenizer([algorithm], return_tensors='np')
+    if question:
+        tokenized = tokenizer([algorithm], return_tensors='tf')
         out = model.generate(**tokenized, max_length=218)
         with tokenizer.as_target_tokenizer():
             translated_algorithm = tokenizer.decode(out[0], skip_special_tokens=True)
 
-        # Display translated algorithm in the same column
+        # Display translated algorithm
         st.header("Translated Algorithm")
         st.write(translated_algorithm)
