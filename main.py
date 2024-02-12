@@ -4,7 +4,7 @@ from transformers import AutoTokenizer, TFAutoModelForSeq2SeqLM
 import autopep8
 
 # Initialize OpenAI client
-client = openai.Client(st.secrets.get("OPENAI_API_KEY"))
+client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY"))
 
 # Initialize tokenizer and model for translation
 model_checkpoint = "Helsinki-NLP/opus-mt-en-hi"
