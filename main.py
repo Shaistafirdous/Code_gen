@@ -7,8 +7,7 @@ import autopep8
 
 model_checkpoint = "Helsinki-NLP/opus-mt-en-hi"
 tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
-OPENAI_API_KEY="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"
-client = OpenAI(api_key=OPENAI_API_KEY)
+client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY"))
 
 
 # Generate algorithm
