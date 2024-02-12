@@ -10,7 +10,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
 
 from transformers import TFAutoModelForSeq2SeqLM
 
-model_path = "C:/Users/Vishwas/Desktop/personal/major project/firdous/tf_model/"
+model_path = "Vishwasv007/eng-hin"
 model = TFAutoModelForSeq2SeqLM.from_pretrained(model_path)
 
 client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY"))
