@@ -37,6 +37,11 @@ if question:
 
     algorithm = completion.choices[0].message.content
 
+    tokenized = tokenizer([algorithm], return_tensors='np')
+        out = model.generate(**tokenized, max_length=218)
+        with tokenizer.as_target_tokenizer():
+            translated_algorithm = tokenizer.decode(out[0], skip_special_tokens=True)
+
     # Create two columns
     col1, col2 = st.columns(2)
 
@@ -49,11 +54,6 @@ if question:
     col2.code(formatted_code, language="python")
 
 if st.button("Translate"):
-        tokenized = tokenizer([algorithm], return_tensors='np')
-        out = model.generate(**tokenized, max_length=218)
-        with tokenizer.as_target_tokenizer():
-            translated_algorithm = tokenizer.decode(out[0], skip_special_tokens=True)
-
-        # Display translated algorithm in the same column
-        st.header("Translated Algorithm")
-        st.write(translated_algorithm)
+    # Display translated algorithm in the same column
+    st.header("Translated Algorithm")
+    st.write(translated_algorithm)
