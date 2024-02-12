@@ -24,6 +24,7 @@ if question:
         messages=[{"role": "user", "content": question}],
     )
     generated_code = response.choices[0].message.content
+    formatted_code = autopep8.fix_code(generated_code)
 
     #formatted_code = black.format_str(generated_code, mode=black.FileMode())
 
@@ -57,4 +58,4 @@ if question:
 
     # Display generated code in the second column
     col2.header("Generated Code")
-    col2.code(generated_code, language="python")
+    col2.code(formatted_code, language="python")
