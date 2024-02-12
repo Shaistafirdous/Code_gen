@@ -51,7 +51,7 @@ if question:
 
     # Display generated code in the second column
     col2.header("Generated Code")
-    col2.code(formatted_code, language="python")
+    col2.write(formatted_code, language="python")
 
 if st.button("Translate"):
     # Display translated algorithm in the same column
