@@ -5,7 +5,7 @@ import transformers
 from transformers import AutoTokenizer, TFAutoModelForSeq2SeqLM
 import autopep8
 
-model_checkpoint = "Helsinki-NLP/opus-mt-en-hi"
+model_checkpoint = ""
 tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
 client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY"))
 
@@ -21,7 +21,7 @@ def generate_algorithm(generated_code):
     return completion.choices[0].message.content
 from transformers import TFAutoModelForSeq2SeqLM
 
-model_path = "Vishwasv007/eng-hin"
+model_path = ""
 model = TFAutoModelForSeq2SeqLM.from_pretrained(model_path)
 
 
@@ -29,7 +29,7 @@ translated_algo=""
 
 question = st.text_input("Type your question here...")
 response = client.chat.completions.create(
-        model="ft:gpt-3.5-turbo-0613:personal::8p1RYc64",
+        model="",
         messages=[{"role": "user", "content": question}],
 )
 
